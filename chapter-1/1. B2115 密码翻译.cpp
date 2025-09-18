@@ -7,15 +7,15 @@ using namespace std;
 int main() {
     string str;
     getline(cin, str);
-    for (int i = 0; i < str.length(); i++) {
-        if (str[i] >= 'a' && str[i] <= 'y') {
-            str[i] = str[i] + 1;
-        } else if (str[i] == 'z') {
-            str[i] = 'a';
-        } else if (str[i] >= 'A' && str[i] <= 'Y') {
-            str[i] = str[i] + 1;
-        } else if (str[i] == 'Z') {
-            str[i] = 'A';
+    for (size_t i = 0; i < str.length(); i++) {
+        if (str[i] >= 'b' && str[i] <= 'z') {
+            str[i] = str[i] - 1;
+        } else if (str[i] == 'a') {
+            str[i] = 'z';
+        } else if (str[i] >= 'B' && str[i] <= 'Z') {
+            str[i] = str[i] - 1;
+        } else if (str[i] == 'A') {
+            str[i] = 'Z';
         }
     }
     cout << str << endl;
