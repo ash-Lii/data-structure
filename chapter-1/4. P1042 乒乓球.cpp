@@ -47,59 +47,52 @@
 using namespace std;
 
 
-
-
-int main(){
-    int a;
-    a = 1;
-    cout << a << endl;
-    return 0;
+void printScore(const vector<int>& score11, const vector<int>& score21) {
+    for (size_t i = 0; i < score11.size(); i += 2) {
+        cout << score11[i] << ":" << score11[i + 1] << endl;
+    }
+    cout << endl;
+    for (size_t i = 0; i < score21.size(); i += 2) {
+        cout << score21[i] << ":" << score21[i + 1] << endl;
+    }
 }
 
+int main() {
+    string input;
+    vector<int> score11, score21;
+    int w11 = 0, l11 = 0, w21 = 0, l21 = 0;
 
+    while (cin >> input) {
+        for (char ch : input) {
+            if (ch == 'E') {
+                score11.push_back(w11);
+                score11.push_back(l11);
+                score21.push_back(w21);
+                score21.push_back(l21);
+                printScore(score11, score21);
+                return 0;
+            } else if (ch == 'W') {
+                w11++;
+                w21++;
+            } else if (ch == 'L') {
+                l11++;
+                l21++;
+            }
 
+            if (((w11 >= 11) || (l11 >= 11)) && (abs(w11 - l11) >= 2)) {
+                score11.push_back(w11);
+                score11.push_back(l11);
+                w11 = 0;
+                l11 = 0;
+            }
 
-// void printScore(const vector<int>& score11, const vector<int>& score21) {
-//     for (size_t i = 0; i < score11.size(); i += 2) {
-//         cout << score11[i] << ":" << score11[i + 1] << endl;
-//     }
-//     cout << endl;
-//     for (size_t i = 0; i < score21.size(); i += 2) {
-//         cout << score21[i] << ":" << score21[i + 1] << endl;
-//     }
-// }
+            if (((w21 >= 21) || (l21 >= 21)) && (abs(w21 - l21) >= 2)) {
+                score21.push_back(w21);
+                score21.push_back(l21);
+                w21 = 0;
+                l21 = 0;
+            }
+        }
 
-// int main() {
-//     string input;
-//     vector<int> score11, score21;
-//     int w11 = 0, l11 = 0, w21 = 0, l21 = 0;
-
-//     while (cin >> input) {
-//         for (char ch : input) {
-//             if (ch == 'E') {
-//                 printScore(score11, score21);
-//                 return 0;
-//             } else if (ch == 'W') {
-//                 w11++;
-//                 w21++;
-//             } else if (ch == 'L') {
-//                 l11++;
-//                 l21++;
-//             }
-
-//             if ((w11 >= 11 || l11 >= 11) && abs(w11 - l11) >= 2) {
-//                 score11.push_back(w11);
-//                 score11.push_back(l11);
-//                 w11 = 0;
-//                 l11 = 0;
-//             }
-
-//             if ((w21 >= 21 || l21 >= 21) && abs(w21 - l21) >= 2) {
-//                 score21.push_back(w21);
-//                 score21.push_back(l21);
-//                 w21 = 0;
-//                 l21 = 0;
-//             }
-//         }
-//     }
-// }
+    }
+}
