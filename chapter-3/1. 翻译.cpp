@@ -35,48 +35,57 @@
 
 
 #include <iostream>
+#include <vector>
+using namespace std;
+
+struct Node {
+    int val;
+    Node* next;
+    Node(int x) : val(x), next(nullptr) {}
+};
 
 int main() {
     int M, N;
-    std::cin >> M >> N;
+    cin >> M >> N;
 
-    int* words = new int[N];
-    for (int i = 0; i < N; ++i) {
-        std::cin >> words[i];
-    }
+    Node *head = nullptr;
+    Node *tail = nullptr;
 
+    int dictCount = 0;
+    int memCount = 0;
 
-    int* memory = new int[M];
-    int memorySize = 0;
-    int dictLookupCount = 0;
+    vector<bool> inMemory(1001, false);
 
     for (int i = 0; i < N; ++i) {
-        bool foundInMemory = false;
-        for (int j = 0; j < memorySize; ++j) {
-            if (memory[j] == words[i]) {
-                foundInMemory = true;
-                break;
-            }
-        }
+        int word;
+        cin >> word;
 
-        if (!foundInMemory) {
-            dictLookupCount++;
-            if (memorySize < M) {
-                memory[memorySize++] = words[i];
+        if (inMemory[word] == false) {
+            dictCount++;
+            inMemory[word] = true;
+            Node* newNode = new Node(word);
+        
+            if(head == nullptr) {
+                head = newNode;
+                tail = newNode;
             } else {
-                // 内存已满，移除最早的单词
-                for (int j = 1; j < M; ++j) {
-                    memory[j - 1] = memory[j];
-                }
-                memory[M - 1] = words[i];
+                tail->next = newNode;
+                tail = newNode;
             }
+
+            memCount++;
+            if (memCount > M) {
+                Node* temp = head;
+                head = head->next;
+                inMemory[temp->val] = false;
+                delete temp;
+                memCount--;
+            }
+
+
         }
     }
 
-    std::cout << dictLookupCount << std::endl;
+    cout << dictCount << endl;
 
-    delete[] words;
-    delete[] memory;
-
-    return 0;
 }   
